@@ -20,7 +20,7 @@ class ContentController extends Controller
      */
     public function create()
     {
-        //
+        dump(Content::all());
     }
 
     /**
@@ -28,7 +28,13 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $content = Content::query()->create([
+            'title' => $request->get('title'),
+            'description' => $request->get('description'),
+            'url' => $request->get('url'),
+            'category_id' => $request->get('category_id'),
+        ]);
+        dd($content);
     }
 
     /**

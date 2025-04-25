@@ -22,6 +22,7 @@ class ContentController extends Controller
      */
     public function create()
     {
+        return Content::all();
     }
 
     /**

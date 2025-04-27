@@ -14,10 +14,7 @@ class ContentController extends Controller
     public function index()
     {
         return Content::all();
-<<<<<<< HEAD
 
-=======
->>>>>>> ustoz/main
     }
 
     /**
@@ -25,10 +22,7 @@ class ContentController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        return Content::all();
-=======
->>>>>>> ustoz/main
+
     }
 
     /**
@@ -37,19 +31,12 @@ class ContentController extends Controller
     public function store(Request $request)
     {
         $content = Content::query()->create([
-<<<<<<< HEAD
-            'title'       => ucfirst(fake()->words(rand(3,7),true)),
-=======
             'title'       => ucfirst(fake()->words(rand(3,7), true)),
->>>>>>> ustoz/main
             'description' => fake()->realText('100'),
             'url'         => fake()->url,
             'category_id' => Category::query()->inRandomOrder()->value('id'),
         ]);
-<<<<<<< HEAD
-=======
 
->>>>>>> ustoz/main
         return $content;
     }
 

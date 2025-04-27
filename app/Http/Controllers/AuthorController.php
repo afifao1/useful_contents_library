@@ -13,7 +13,11 @@ class AuthorController extends Controller
     public function index()
     {
         $authors = Author::all();
+<<<<<<< HEAD
         return view('welcome',['authors'=>$authors]);
+=======
+        return view('welcome', ['authors' => $authors]);
+>>>>>>> ustoz/main
     }
 
     /**

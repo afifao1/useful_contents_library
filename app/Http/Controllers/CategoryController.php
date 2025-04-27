@@ -14,7 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         return Category::all();
+=======
+        $categories = Category::all();
+        return $categories;
+>>>>>>> ustoz/main
     }
 
     /**
@@ -22,8 +27,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
         $categories = Category::all();
         return $categories;
+=======
+        //
+>>>>>>> ustoz/main
     }
 
     /**

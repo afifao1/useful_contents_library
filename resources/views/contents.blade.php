@@ -7,6 +7,11 @@
 </head>
 
 <div class="container">
+    @if (session('success'))
+        <div class='alert alert-success'>
+            {{session('success')}}
+        </div>
+        @endif
     <div class="row">
         @foreach($contents as $content)
             <div class="col-4 mb-3 p-3 mb-sm-0">

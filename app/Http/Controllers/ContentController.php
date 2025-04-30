@@ -41,6 +41,9 @@ class ContentController extends Controller
 
 
         $content->genres()->attach($request->get('genre_id'));
+
+        return redirect('/contents')->with('success','Content created successfully');
+        // return redirect()->route('contents.show',$content);
     }
 
     /**
@@ -48,8 +51,8 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        $content->load('authors');
-        return view('content', ['content' => $content]);
+        $content->load('authors','genres');
+        return view('content',compact ('content'));
     }
 
     /**

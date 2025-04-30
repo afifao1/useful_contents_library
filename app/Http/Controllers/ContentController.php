@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Content;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
@@ -31,14 +32,15 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
+
         $content = Content::query()->create([
-            'title'       => ucfirst(fake()->words(rand(3,7), true)),
-            'description' => fake()->realText('100'),
-            'url'         => fake()->url,
-            'category_id' => Category::query()->inRandomOrder()->value('id'),
+            'title'       => request('title'),
+            'description' => request('description'),
+            'url'         => request('url'),
+            'category_id' => request('category_id'),
         ]);
 
-        return $content;
+        $content->genres()->attach(request($request->get('genre_id')));
     }
 
     /**
@@ -72,5 +74,11 @@ class ContentController extends Controller
     public function destroy(Content $content)
     {
         //
+    }
+
+    public function adminIndex(){
+        $categories = Category::all('id', 'name')->pluck('name', 'id')->toArray();
+        $genres = Genre::all('id', 'name')->pluck('name', 'id')->toArray();
+        return view('admin.index',compact('categories','genres'));
     }
 }

@@ -28,6 +28,11 @@ class Content extends Model
         );
     }
 
+    public function genres(){
+        return $this->belongsToMany(Genre::class);
+    }
+
+
     /**
      * How to implement many to many relationship
      * TODO:

@@ -32,7 +32,6 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-
         $content = Content::query()->create([
             'title'       => request('title'),
             'description' => request('description'),
@@ -40,7 +39,8 @@ class ContentController extends Controller
             'category_id' => request('category_id'),
         ]);
 
-        $content->genres()->attach(request($request->get('genre_id')));
+
+        $content->genres()->attach($request->get('genre_id'));
     }
 
     /**

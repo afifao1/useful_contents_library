@@ -16,6 +16,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route::get('/authors', function () {
+    // return view('authors');
+// })->middleware(['auth', 'verified'])->name('authors');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -28,9 +33,11 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', [HomeController::class, 'home']);
-Route::resource('authors', AuthorController::class);
+// Route::resource('authors', AuthorController::class);
 Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::resource('/contents', ContentController::class);
 
 Route::get('/admin/contents', [ContentController::class, 'adminIndex']);
+
+Route::get('/authors', [AuthorController::class, 'index'])->name('authors');

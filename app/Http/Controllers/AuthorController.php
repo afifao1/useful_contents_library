@@ -12,9 +12,11 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
 
-        return view('welcome', ['authors' => $authors]);
+            return view('authors');
+        // $authors = Author::all();
+
+        // return view('welcome', ['authors' => $authors]);
     }
 
     /**

@@ -25,11 +25,13 @@ Route::post('/tokens/create', function (Request $request) {
     ]);
 });
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::get('/genres',function(){
-    return \App\Models\Genre::all();
-})->middleware('auth:sanctum');
+    Route::get('/genres',function(){
+        return \App\Models\Genre::all();
+    });
+});
 

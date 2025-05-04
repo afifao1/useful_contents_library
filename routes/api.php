@@ -25,6 +25,14 @@ Route::post('/tokens/create', function (Request $request) {
     ]);
 });
 
+Route::get('/contents', function () {
+    return \App\Models\Content::all();
+});
+
+Route::get('/contents/{id}', function ($id) {
+    return \App\Models\Content::find($id);
+});
+
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function (Request $request) {
         return $request->user();

@@ -9,27 +9,16 @@ use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
-    {
-        $contents = Content::all();
-
-        return view('contents', ['contents' => $contents]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+{
+    return response()->json([
+        'contents' => Content::all()
+    ]);
+}
     public function create()
     {
 
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $content = Content::query()->create([
@@ -51,8 +40,11 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        $content->load('authors','genres');
-        return view('content',compact ('content'));
+        // $content->load('authors','genres');
+        // return view('content',compact ('content'));
+        return response()->json([
+            'content' => $content->load('authors', 'genres'),
+        ]);
     }
 
     /**

@@ -15,7 +15,8 @@
         "laravel/telescope": "^5.7",
         "laravel/tinker": "^2.10.1",
         "sentry/sentry": "^4.11",
-        "sentry/sentry-laravel": "^4.13"
+        "sentry/sentry-laravel": "^4.13",
+        "spatie/laravel-permission": "^6.17"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

@@ -17,7 +17,7 @@
                     </x-nav-link>
                     @role('admin')
                     <x-nav-link :href="route('authors')" :active="request()->routeIs('authors')">
-                           'Authors
+                        Authors
                     </x-nav-link>
                     @endrole
                 </div>

@@ -5,64 +5,77 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the categories.
      */
     public function index()
     {
         $categories = Category::all();
-        return $categories;
+        return view('categories.index', compact('categories'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new category.
      */
     public function create()
     {
-
+        return view('categories.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created category in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        dd($request->all());
+        // Validated data from StoreCategoryRequest
+        Category::create($request->validated());
+
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Category created successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified category.
      */
     public function show(Category $category)
     {
-        //
+        return view('categories.show', compact('category'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified category.
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified category in storage.
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        // Validated data from UpdateCategoryRequest
+        $category->update($request->validated());
+
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Category updated successfully.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified category from storage.
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Category deleted successfully.');
     }
 }

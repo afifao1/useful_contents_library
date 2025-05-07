@@ -33,7 +33,8 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [HomeController::class, 'home']);
 // Route::resource('authors', AuthorController::class);
-Route::get('/categories', [CategoryController::class, 'index']);
+// Route::get('/categories', [CategoryController::class, 'index']);
+Route::resource('categories', CategoryController::class);
 
 Route::resource('/contents', ContentController::class);
 

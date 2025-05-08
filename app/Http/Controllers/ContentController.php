@@ -11,10 +11,13 @@ class ContentController extends Controller
 {
     public function index()
 {
-    return response()->json([
-        'contents' => Content::all()
-    ]);
+    // return response()->json(['contents' => Content::all()]);
+
+    $content = ((new \App\Services\Contents\Content())->all());
+
+    return response()->json($content);
 }
+
     public function create()
     {
 

@@ -11,17 +11,17 @@ class ContentController extends Controller
 {
     public function index()
 {
-    // return response()->json(['contents' => Content::all()]);
-
-    $content = ((new \App\Services\Contents\Content())->all());
-
-    return response()->json($content);
+    $contents = (new \App\Services\Contents\Content())->all();
+    return view('contents.index', compact('contents'));
 }
 
     public function create()
     {
+        $categories = Category::all();
+        $genres = Genre::all();
 
-    }
+        return view('contents.create', compact('categories', 'genres'));    }
+
     public function store(Request $request)
     {
         $content = Content::query()->create([
@@ -35,43 +35,47 @@ class ContentController extends Controller
         $content->genres()->attach($request->get('genre_id'));
 
         return redirect('/contents')->with('success','Content created successfully');
-        // return redirect()->route('contents.show',$content);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Content $content)
     {
-        // $content->load('authors','genres');
-        // return view('content',compact ('content'));
-        return response()->json([
-            'content' => $content->load('authors', 'genres'),
-        ]);
+        $content->load('authors', 'genres');
+        return view('contents.show', compact('content'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Content $content)
     {
-        //
+        $categories = Category::all();
+        $genres = Genre::all();
+
+        return view('contents.edit', compact('content', 'categories', 'genres'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Content $content)
     {
-        //
+        $validated = $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'url'         => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $content->update($validated);
+
+        // Janrlar (genres)ni yangilash
+        $content->genres()->sync($request->get('genre_id', []));
+
+        return redirect()->route('contents.index')->with('success', 'Kontent yangilandi!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Content $content)
     {
-        //
+        $content->genres()->detach();
+
+        // Kontentni o‘chirish
+        $content->delete();
+
+        return redirect()->route('contents.index')->with('success', 'Kontent o‘chirildi!');
     }
 
     public function adminIndex(){

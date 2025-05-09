@@ -7,61 +7,62 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // List all authors
     public function index()
     {
         $authors = Author::all();
-
-        return view('authors', ['authors' => $authors]);
+        return view('authors.index', compact('authors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Show form to create new author
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store new author
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'nullable|url',
+        ]);
+
+        Author::create($validated);
+
+        return redirect()->route('authors.index')->with('success', 'Author created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Show specific author (optional)
     public function show(Author $author)
     {
-        return $author;
+        return view('authors.show', compact('author'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Show form to edit author
     public function edit(Author $author)
     {
-        //
+        return view('authors.edit', compact('author'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update existing author
     public function update(Request $request, Author $author)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'nullable|url',
+        ]);
+
+        $author->update($validated);
+
+        return redirect()->route('authors.index')->with('success', 'Author updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Delete author
     public function destroy(Author $author)
     {
-        //
+        $author->delete();
+
+        return redirect()->route('authors.index')->with('success', 'Author deleted successfully.');
     }
 }

@@ -17,23 +17,24 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-light text-dark">
+<body class="font-sans antialiased bg-dark text-dark">
     <div class="min-h-screen d-flex flex-column">
 
         {{-- Navbar --}}
         @include('layouts.navigation')
 
         {{-- Page Heading --}}
-        @hasSection('header')
-            <header class="bg-white shadow mb-4">
+        {{-- @hasSection('header') --}}
+            <header class="bg-dark shadow mb-4">
                 <div class="container py-4">
-                    <h2 class="h4">@yield('header')</h2>
+                    <h2 class="h4">Hedaer</h2>
                 </div>
             </header>
-        @endif
+        {{-- @endif --}}
 
         {{-- Page Content --}}
         <main class="container mb-5">
+            {{$slot ?? ''}}
             @yield('content')
         </main>
 

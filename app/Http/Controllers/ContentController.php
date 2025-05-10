@@ -6,81 +6,54 @@ use App\Models\Category;
 use App\Models\Content;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use App\Services\Contents\Content as ContentService;
+
 
 class ContentController extends Controller
 {
-    public function index()
-{
-    $contents = (new \App\Services\Contents\Content())->all();
-    return view('contents.index', compact('contents'));
-}
-
     public function create()
     {
         $categories = Category::all();
         $genres = Genre::all();
 
-        return view('contents.create', compact('categories', 'genres'));    }
+        return view('contents.create', compact('categories', 'genres'));
+    }
+    public function index()
+    {
+        $contents = (new ContentService())->all();
+        return view('contents.index', compact('contents'));
+    }
 
     public function store(Request $request)
     {
-        $content = Content::query()->create([
-            'title'       => request('title'),
-            'description' => request('description'),
-            'url'         => request('url'),
-            'category_id' => request('category_id'),
-        ]);
-
-
-        $content->genres()->attach($request->get('genre_id'));
-
+        (new ContentService())->store($request);
         return redirect('/contents')->with('success','Content created successfully');
     }
 
-    public function show(Content $content)
+    public function show($id)
     {
-        $content->load('authors', 'genres');
+        $content = (new ContentService())->show((int)$id);
         return view('contents.show', compact('content'));
     }
 
-    public function edit(Content $content)
+    public function edit($id)
     {
+        $content = (new ContentService())->show((int)$id);
         $categories = Category::all();
         $genres = Genre::all();
 
         return view('contents.edit', compact('content', 'categories', 'genres'));
     }
 
-    public function update(Request $request, Content $content)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
-            'url'         => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-        ]);
-
-        $content->update($validated);
-
-        // Janrlar (genres)ni yangilash
-        $content->genres()->sync($request->get('genre_id', []));
-
+        (new ContentService())->update($request, (int)$id);
         return redirect()->route('contents.index')->with('success', 'Kontent yangilandi!');
     }
 
-    public function destroy(Content $content)
+    public function destroy($id)
     {
-        $content->genres()->detach();
-
-        // Kontentni o‘chirish
-        $content->delete();
-
+        (new ContentService())->destroy((int)$id);
         return redirect()->route('contents.index')->with('success', 'Kontent o‘chirildi!');
-    }
-
-    public function adminIndex(){
-        $categories = Category::all('id', 'name')->pluck('name', 'id')->toArray();
-        $genres = Genre::all('id', 'name')->pluck('name', 'id')->toArray();
-        return view('admin.index',compact('categories','genres'));
     }
 }

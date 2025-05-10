@@ -1,3 +1,20 @@
+<style>
+    label, select, option, input, textarea {
+        color: white;
+    }
+
+    /* Background rang ham qoraroq bo‘lsa, yaxshi ko‘rinadi */
+    input, textarea, select {
+        background-color: #222;
+        border: 1px solid #444;
+    }
+
+    .btn-success {
+        background-color: green;
+        color: white;
+    }
+</style>
+
 @extends('layouts.app')
 
 @section('content')

@@ -20,6 +20,14 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $content->title }}</h5>
                         <p class="card-text">{{ Str::limit($content->description, 100) }}</p>
+                        @if(Str::contains($content->url, ['youtube', 'spotify', 't.me', 'iframe']))
+                            <div class="ratio ratio-16x9 mb-3">
+                                <iframe src="{{ $content->url }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        @else
+                            <a href="{{ $content->url }}" target="_blank" class="btn btn-outline-secondary mb-3">Ko‘rish</a>
+                        @endif
+
                         <a href="{{ route('contents.show', $content->id) }}" class="btn btn-sm btn-outline-primary">Batafsil</a>
                     </div>
                 </div>

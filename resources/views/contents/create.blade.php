@@ -59,6 +59,16 @@
             <small class="text-muted">Bir nechta janr tanlashingiz mumkin (Ctrl bosib tanlang)</small>
         </div>
 
+        <div class="mb-3">
+            <label for="author_id" class="form-label">Mualliflar</label>
+            <select name="author_id[]" class="form-select" multiple required>
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->name }}</option>
+                @endforeach
+            </select>
+            <small class="text-muted">Bir nechta muallif tanlashingiz mumkin (Ctrl bosib tanlang)</small>
+        </div>
+
         <button type="submit" class="btn btn-success">Saqlash</button>
     </form>
 </div>

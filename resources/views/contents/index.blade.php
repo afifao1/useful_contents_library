@@ -20,6 +20,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $content->title }}</h5>
                         <p class="card-text">{{ Str::limit($content->description, 100) }}</p>
+                        @if($content->authors && $content->authors->count())
+                            <p>
+                                <strong>Mualliflar:</strong><br>
+                                @foreach($content->authors as $author)
+                                    <span class="badge bg-secondary">{{ $author->name }}</span>
+                                @endforeach
+                            </p>
+                        @endif
+
                         @if(Str::contains($content->url, ['youtube', 'spotify', 't.me', 'iframe']))
                             <div class="ratio ratio-16x9 mb-3">
                                 <iframe src="{{ $content->url }}" frameborder="0" allowfullscreen></iframe>

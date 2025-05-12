@@ -32,18 +32,5 @@ class Content extends Model
         return $this->belongsToMany(Genre::class);
     }
 
-
-    /**
-     * How to implement many to many relationship
-     * TODO:
-     *  1. Create tables with migrations
-     *     - create authors table
-     *     - create contents table
-     *     - create a pivot (intermediate) table for the many-to-many relationship
-     *  2. Define the relationship in the:
-     *     - Content model (belongsToMany) belongsTo
-     *     - Author model (belongsToMany) hasMany
-     *  3. Use the relationship in your code
-     */
 }
 

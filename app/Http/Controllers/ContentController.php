@@ -7,16 +7,17 @@ use App\Models\Content;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use App\Services\Contents\Content as ContentService;
-
+use App\Models\Author;
 
 class ContentController extends Controller
-{
+    {
     public function create()
     {
         $categories = Category::all();
         $genres = Genre::all();
+        $authors = Author::all(); // yangi qo‘shildi
 
-        return view('contents.create', compact('categories', 'genres'));
+        return view('contents.create', compact('categories', 'genres', 'authors'));
     }
     public function index()
     {
@@ -38,12 +39,14 @@ class ContentController extends Controller
 
     public function edit($id)
     {
-        $content = (new ContentService())->show((int)$id);
+        $content = Content::with(['genres', 'authors'])->findOrFail($id);
         $categories = Category::all();
         $genres = Genre::all();
+        $authors = Author::all();
 
-        return view('contents.edit', compact('content', 'categories', 'genres'));
+        return view('contents.edit', compact('content', 'categories', 'genres', 'authors'));
     }
+
 
     public function update(Request $request, $id)
     {

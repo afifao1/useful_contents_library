@@ -58,6 +58,19 @@
             <div class="form-text">CTRL bosib turib bir nechta tanlashingiz mumkin</div>
         </div>
 
+        <div class="mb-3">
+            <label for="author_id" class="form-label">Mualliflar</label>
+            <select name="author_id[]" class="form-select" multiple>
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}"
+                        {{ in_array($author->id, old('author_id', $content->authors->pluck('id')->toArray())) ? 'selected' : '' }}>
+                        {{ $author->name }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="form-text">CTRL bosib turib bir nechta muallif tanlashingiz mumkin</div>
+        </div>
+
         <button type="submit" class="btn btn-success">Saqlash</button>
         <a href="{{ route('contents.index') }}" class="btn btn-secondary">Bekor qilish</a>
     </form>

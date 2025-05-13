@@ -23,15 +23,6 @@
         {{-- Navbar --}}
         @include('layouts.navigation')
 
-        {{-- Page Heading --}}
-        {{-- @hasSection('header') --}}
-            <header class="bg-dark shadow mb-4">
-                <div class="container py-4">
-                    <h2 class="h4">Hedaer</h2>
-                </div>
-            </header>
-        {{-- @endif --}}
-
         {{-- Page Content --}}
         <main class="container mb-5">
             {{$slot ?? ''}}

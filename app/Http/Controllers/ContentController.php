@@ -15,7 +15,7 @@ class ContentController extends Controller
     {
         $categories = Category::all();
         $genres = Genre::all();
-        $authors = Author::all(); // yangi qo‘shildi
+        $authors = Author::all();
 
         return view('contents.create', compact('categories', 'genres', 'authors'));
     }

@@ -62,6 +62,7 @@ public function store(Request $request): ContentModel
         'url'         => 'nullable|string',
         'category_id' => 'required|exists:categories,id',
         'genre_id'    => 'required|array',
+        'author_id'   => 'required|exists:authors,id',
     ]);
 
     // Embedga o‘gir
@@ -69,7 +70,7 @@ public function store(Request $request): ContentModel
 
     $content = ContentModel::create($validated);
     $content->genres()->attach($request->get('genre_id'));
-
+    $content->authors()->attach($request->get('author_id'));
     return $content;
 }
 
@@ -81,6 +82,7 @@ public function update(Request $request, int $id): ContentModel
         'url'         => 'nullable|string',
         'category_id' => 'required|exists:categories,id',
         'genre_id'    => 'required|array',
+        'author_id'   => 'required|exists:authors,id',
     ]);
 
     $validated['url'] = $this->convertToEmbedLink($validated['url']);
@@ -88,7 +90,7 @@ public function update(Request $request, int $id): ContentModel
     $content = ContentModel::findOrFail($id);
     $content->update($validated);
     $content->genres()->sync($request->get('genre_id'));
-
+    $content->authors()->sync($request->get('author_id'));
     return $content;
 }
 

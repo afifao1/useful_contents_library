@@ -58,4 +58,11 @@ class ContentController extends Controller
         (new ContentService())->destroy((int)$id);
         return redirect()->route('contents.index')->with('success', 'Kontent o‘chirildi!');
     }
+
+    public function welcome()
+{
+    $contents = \App\Models\Content::with('author')->get(); // author bilan bog'liq ma'lumotlar
+    return view('welcome', compact('contents'));
+}
+
 }

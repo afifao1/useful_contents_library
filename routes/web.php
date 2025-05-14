@@ -9,9 +9,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\GenreController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/', [ContentController::class, 'welcome'])->name('welcome');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

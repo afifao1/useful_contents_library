@@ -58,4 +58,3 @@
             crossorigin="anonymous"></script>
 </body>
 </html> --}}
-{{-- <h1>Content Hub</h1> --}}

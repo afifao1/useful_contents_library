@@ -60,9 +60,8 @@ class ContentController extends Controller
     }
 
     public function welcome()
-{
-    $contents = \App\Models\Content::with('author')->get(); // author bilan bog'liq ma'lumotlar
-    return view('welcome', compact('contents'));
-}
-
+    {
+        $contents = \App\Models\Content::with('author')->get(); 
+        return view('welcome', compact('contents'));
+    }
 }

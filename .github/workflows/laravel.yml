@@ -1,0 +1,36 @@
+name: 🚀 Deploy Laravel App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: 🧳 Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⏬ Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 🔐 Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: 🚀 Deploy via SSH
+        run: |
+          ssh root@185.191.141.56 << 'EOF'
+            cd /var/www/afifa/useful_contents_library/
+            git pull origin main
+            docker exec content-hub-app composer install --no-interaction --prefer-dist --optimize-autoloader
+            docker exec content-hub-app php artisan config:clear
+            docker exec content-hub-app php artisan route:clear
+            docker exec content-hub-app php artisan view:clear
+            docker exec content-hub-app php artisan cache:clear
+            docker exec content-hub-app php artisan config:cache
+            docker exec content-hub-app php artisan optimize
+          EOF

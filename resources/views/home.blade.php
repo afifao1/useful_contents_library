@@ -29,8 +29,11 @@
                                 $embedUrl = $content->url;
 
                                 if (Str::contains($content->url, 'youtube.com/watch')) {
-                                    $videoId = explode('v=', parse_url($content->url, PHP_URL_QUERY))[1];
-                                    $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                    parse_str(parse_url($content->url, PHP_URL_QUERY), $queryParams);
+                                    $videoId = $queryParams['v'] ?? null;
+                                    if ($videoId) {
+                                        $embedUrl = 'https://www.youtube.com/embed/' . $videoId;
+                                    }
                                 }
 
                                 if (Str::contains($content->url, 'spotify.com')) {
@@ -42,10 +45,12 @@
                                 }
                             @endphp
 
-                            @if(Str::contains($content->url, ['youtube', 'spotify', 't.me']))
+                            @if(Str::contains($content->url, ['youtube', 'spotify']))
                                 <div class="ratio ratio-16x9 mb-3">
                                     <iframe src="{{ $embedUrl }}" frameborder="0" allowfullscreen></iframe>
                                 </div>
+                            @elseif(Str::contains($content->url, 't.me'))
+                                <p><a href="{{ $embedUrl }}" class="btn btn-outline-info mb-3" target="_blank">Telegramga o'tish</a></p>
                             @elseif(Str::contains($content->url, ['.jpg', '.jpeg', '.png', '.gif', '.webp']))
                                 <img src="{{ $content->url }}" class="img-fluid mb-3" alt="Image">
                             @elseif(Str::contains($content->url, ['.mp4', '.webm']))

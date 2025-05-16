@@ -41,3 +41,6 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::resource('authors', AuthorController::class);
 Route::resource('genres', GenreController::class);
+
+Route::resource('contents', ContentController::class);
+Route::resource('categories', CategoryController::class);

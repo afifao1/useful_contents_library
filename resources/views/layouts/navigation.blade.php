@@ -15,9 +15,19 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     @role('admin')
-                    <x-nav-link :href="route('authors.index')" :active="request()->routeIs('authors.*')">
-                        Authors
+                        <x-nav-link :href="route('authors.index')" :active="request()->routeIs('authors.*')">
+                            Authors
+                        </x-nav-link>
+                        <x-nav-link :href="route('contents.index')" :active="request()->routeIs('contents.*')">
+                            Contents
+                        </x-nav-link>
+                        <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                            Categories
+                        </x-nav-link>
+                        <x-nav-link :href="route('genres.index')" :active="request()->routeIs('genres.*')">
+                            Genres
                         </x-nav-link>
                     @endrole
                 </div>
@@ -83,6 +93,21 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @role('admin')
+                <x-responsive-nav-link :href="route('authors.index')" :active="request()->routeIs('authors.*')">
+                    Authors
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('contents.index')" :active="request()->routeIs('contents.*')">
+                    Contents
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                    Categories
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('genres.index')" :active="request()->routeIs('genres.*')">
+                    Genres
+                </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->

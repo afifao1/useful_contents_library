@@ -24,7 +24,7 @@ jobs:
       - name: 🚀 Deploy via SSH
         run: |
           ssh root@185.191.141.56 << 'EOF'
-            cd /var/www/afifa/useful_contents_library/
+            cd /root/var/www/afifa/useful_contents_library/
             git pull origin main
             docker exec content-hub-app composer install --no-interaction --prefer-dist --optimize-autoloader
             docker exec content-hub-app php artisan config:clear

@@ -31,5 +31,4 @@ jobs:
             docker exec content-hub-app php artisan view:clear
             docker exec content-hub-app php artisan cache:clear
             docker exec content-hub-app php artisan config:cache
-            docker exec content-hub-app php artisan optimize
           EOF

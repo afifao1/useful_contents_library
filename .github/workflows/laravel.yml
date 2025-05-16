@@ -28,7 +28,6 @@ jobs:
             git pull origin main
             docker exec content-hub-app composer install --no-interaction --prefer-dist --optimize-autoloader
             docker exec content-hub-app php artisan config:clear
-            docker exec content-hub-app php artisan route:clear
             docker exec content-hub-app php artisan view:clear
             docker exec content-hub-app php artisan cache:clear
             docker exec content-hub-app php artisan config:cache

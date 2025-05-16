@@ -24,7 +24,7 @@
                             <p>
                                 <strong>Mualliflar:</strong><br>
                                 @foreach($content->authors as $author)
-                                    <span class="badge bg-secondary">{{ $author->name }}</span>
+                                    <span class="badge bg-primary">{{ $author->name }}</span>
                                 @endforeach
                             </p>
                         @endif

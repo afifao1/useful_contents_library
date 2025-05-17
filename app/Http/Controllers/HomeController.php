@@ -7,14 +7,27 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Content;
-
 
 class HomeController extends Controller
 {
-    public function home(): View|Application|Factory
+    public function home(Request $request): View|Application|Factory
     {
-        $contents = Content::with('authors')->latest()->get();
+        $query = Content::with('authors')->latest();
+
+        if ($search = $request->input('search')) {
+            $searchLower = strtolower($search);
+
+            $query->where(function ($q) use ($searchLower) {
+                $q->where(DB::raw('LOWER(title)'), 'like', '%' . $searchLower . '%')
+                  ->orWhere(DB::raw('LOWER(description)'), 'like', '%' . $searchLower . '%');
+            });
+        }
+
+        $contents = $query->get();
+
         return view('home', compact('contents'));
     }
 }

@@ -9,9 +9,14 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="d-flex justify-content-end mb-3">
-        <a href="{{ route('contents.create') }}" class="btn btn-primary">+ Yangi Kontent</a>
-    </div>
+    {{-- Faqat admin foydalanuvchiga "Yangi Kontent" tugmasi --}}
+    @auth
+        @if(auth()->user()->is_admin)
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ route('contents.create') }}" class="btn btn-primary">+ Yangi Kontent</a>
+            </div>
+        @endif
+    @endauth
 
     <div class="row">
         @foreach($contents as $content)
@@ -20,6 +25,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $content->title }}</h5>
                         <p class="card-text">{{ Str::limit($content->description, 100) }}</p>
+
                         @if($content->authors && $content->authors->count())
                             <p>
                                 <strong>Mualliflar:</strong><br>

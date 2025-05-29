@@ -41,23 +41,28 @@
                         @endforelse
                     </div>
 
-                    <div class="d-flex gap-2">
-                        <a href="{{ route('contents.edit', $content->id) }}" class="btn btn-outline-primary">
-                            ✏️ Tahrirlash
-                        </a>
+                    {{-- Faqat admin foydalanuvchilarga ko‘rsatiladi --}}
+                    @auth
+                        @if(auth()->user()->is_admin)
+                            <div class="d-flex gap-2 mb-3">
+                                <a href="{{ route('contents.edit', $content->id) }}" class="btn btn-outline-primary">
+                                    ✏️ Tahrirlash
+                                </a>
 
-                        <form action="{{ route('contents.destroy', $content->id) }}" method="POST" onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger">
-                                🗑️ O‘chirish
-                            </button>
-                        </form>
+                                <form action="{{ route('contents.destroy', $content->id) }}" method="POST" onsubmit="return confirm('Rostdan ham o‘chirmoqchimisiz?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        🗑️ O‘chirish
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
+                    @endauth
 
-                        <a href="{{ route('contents.index') }}" class="btn btn-outline-secondary">
-                            ⬅️ Barcha kontentlar
-                        </a>
-                    </div>
+                    <a href="{{ route('contents.index') }}" class="btn btn-outline-secondary">
+                        ⬅️ Barcha kontentlar
+                    </a>
 
                 </div>
             </div>

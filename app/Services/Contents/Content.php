@@ -101,6 +101,7 @@ public function update(Request $request, int $id): ContentModel
     {
         $content = ContentModel::findOrFail($id);
         $content->genres()->detach();
+        $content->authors()->detach();
         return $content->delete();
     }
 }

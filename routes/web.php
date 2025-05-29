@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthorController;
@@ -27,17 +28,25 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/admin/contents', [ContentController::class, 'adminIndex']);
+    // Admin panel uchun kontentlar (alohida)
+    Route::get('/admin/contents', [ContentController::class, 'adminIndex'])->name('admin.contents');
 
-    Route::resource('contents', ContentController::class);
-    Route::resource('authors', AuthorController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('genres', GenreController::class);
+    // Contents resource, web uchun - nomi "contents.*"
 
-    // Profile settings
+
+    // Profil sozlamalari
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::resource('contents', ContentController::class);
+
+// Faqat adminlar uchun route’lar (checkadmin middleware bilan)
+Route::middleware(['auth', 'checkadmin'])->group(function () {
+    Route::resource('authors', AuthorController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('genres', GenreController::class);
 });
 
 // Auth paketining boshqa marshrutlari (logout va h.k.)

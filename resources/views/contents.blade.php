@@ -21,7 +21,7 @@
                         <p class="card-text">{{$content->description}}</p>
                         <a href="/contents/{{$content->id}}" class="btn btn-primary">Open</a>
                     </div>
-                    @dump($content->authors)
+                    {{-- @dump($content->authors) --}}
                 </div>
             </div>
         @endforeach

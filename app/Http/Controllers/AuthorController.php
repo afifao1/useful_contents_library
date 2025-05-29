@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+/**
+ * @method \Illuminate\Routing\Controller middleware($name, array $options = [])
+ */
 
 class AuthorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('checkadmin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     // List all authors
     public function index()
     {

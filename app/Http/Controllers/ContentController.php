@@ -7,9 +7,19 @@ use App\Models\Genre;
 use Illuminate\Http\Request;
 use App\Services\Contents\Content as ContentService;
 use App\Models\Author;
+use Illuminate\Routing\Controllers\HasMiddleware;
+
+/**
+ * @method \Illuminate\Routing\Controller middleware($name, array $options = [])
+ */
 
 class ContentController extends Controller
     {
+        public function __construct()
+    {
+         $this->middleware('checkadmin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     public function create()
     {
         $categories = Category::all();
@@ -61,7 +71,7 @@ class ContentController extends Controller
 
     public function welcome()
     {
-        $contents = \App\Models\Content::with('author')->get(); 
+        $contents = \App\Models\Content::with('author')->get();
         return view('welcome', compact('contents'));
     }
 }

@@ -8,6 +8,10 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('checkadmin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
 
     public function index()
     {
@@ -36,7 +40,7 @@ class CategoryController extends Controller
         return view('categories.show', compact('category'));
     }
 
- 
+
     public function edit(Category $category)
     {
         return view('categories.edit', compact('category'));
